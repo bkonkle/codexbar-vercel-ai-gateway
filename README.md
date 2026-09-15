@@ -20,6 +20,7 @@ Create a key from **Vercel Dashboard > AI Gateway > API Keys**. The key belongs 
 3. Click **Install...** and select the downloaded file.
 4. Review and approve access to `https://ai-gateway.vercel.sh`.
 5. Enter your AI Gateway API key in the plugin settings.
+6. Optionally change the credit budget from its `$20` default.
 
 CodexBar stores the key as a secure plugin setting and injects it as a bearer token. The plugin source cannot read or log the key directly.
 
@@ -41,10 +42,13 @@ it as an appended plugin card.
 ## What It Shows
 
 - Remaining AI Gateway credit balance in USD
+- Remaining-credit progress against a configurable budget, defaulting to $20
 - Lifetime AI Gateway spend in USD
 - Exact-data confidence, because both values come directly from Vercel
 
-The plugin intentionally does not calculate a percentage. Vercel reports a current balance and lifetime spend, not a fixed lifetime credit limit; combining those values into a utilization percentage would be misleading after credit top-ups.
+Vercel reports a current balance but not a fixed credit limit. The plugin therefore calculates its progress bar against
+the **Credit budget (USD)** setting rather than deriving a limit from lifetime spend. Set this to your usual top-up
+amount or another balance target. The displayed dollar balance remains the exact value reported by Vercel.
 
 ## Permissions And Privacy
 

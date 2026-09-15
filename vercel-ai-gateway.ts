@@ -6,7 +6,7 @@ type VercelCreditsResponse = {
 defineProvider({
   id: "vercel-ai-gateway",
   name: "AI Gateway",
-  icon: { monogram: "▲" },
+  icon: { monogram: "▲", tint: "#000000" },
   topLevel: true,
   endpoints: ["https://ai-gateway.vercel.sh"],
   auth: { type: "bearer", secret: "AI_GATEWAY_API_KEY" },
@@ -16,6 +16,12 @@ defineProvider({
       title: "AI Gateway API key",
       subtitle: "Vercel AI Gateway key used to read the team's credit balance.",
       type: "secure",
+    },
+    {
+      key: "CREDIT_BUDGET_USD",
+      title: "Credit budget (USD)",
+      subtitle: "Used for the remaining-credit bar. Defaults to $20.",
+      type: "plain",
     },
   ],
   capabilities: ["http-status"],
@@ -61,8 +67,18 @@ defineProvider({
 
     const balance = amount(payload.balance, "balance");
     const totalUsed = amount(payload.total_used, "total_used");
+    const budgetSetting = ctx.settings.get("CREDIT_BUDGET_USD");
+    const budget = budgetSetting && budgetSetting.trim() !== "" ? Number(budgetSetting) : 20;
+    if (!Number.isFinite(budget) || budget <= 0) {
+      throw ctx.fail.parseFailure("Credit budget must be a positive USD amount.");
+    }
+    const budgetUsed = Math.max(0, budget - balance);
 
     return {
+      primary: {
+        usedPercent: ctx.pct(budgetUsed, budget),
+        resetDescription: `${ctx.format.usd(balance)} remaining`,
+      },
       cost: {
         used: totalUsed,
         balance,
@@ -76,6 +92,7 @@ defineProvider({
           title: "Credits",
           rows: [
             { label: "Remaining", value: ctx.format.usd(balance) },
+            { label: "Credit budget", value: ctx.format.usd(budget) },
             { label: "Lifetime spend", value: ctx.format.usd(totalUsed) },
           ],
         },
