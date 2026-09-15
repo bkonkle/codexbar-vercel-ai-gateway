@@ -5,7 +5,7 @@ type VercelCreditsResponse = {
 
 defineProvider({
   id: "vercel-ai-gateway",
-  name: "Vercel AI Gateway",
+  name: "AI Gateway",
   icon: { monogram: "▲" },
   topLevel: true,
   endpoints: ["https://ai-gateway.vercel.sh"],
