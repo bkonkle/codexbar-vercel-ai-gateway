@@ -6,7 +6,7 @@ The plugin uses Vercel's documented [`GET /v1/credits`](https://vercel.com/docs/
 
 ## Requirements
 
-- CodexBar 0.57.0 or newer with provider-plugin support
+- CodexBar 0.59.0 or newer for first-class provider tabs
 - A Vercel AI Gateway API key
 
 Create a key from **Vercel Dashboard > AI Gateway > API Keys**. The key belongs to a Vercel team, and the displayed balance and spend are for that team.
@@ -34,6 +34,9 @@ From a cloned copy of this repository:
 The script copies the plugin to `${XDG_CONFIG_HOME:-~/.config}/codexbar/providers/vercel-ai-gateway.ts`. If a different version already exists, it creates a timestamped backup before replacing it.
 
 After installation, open **CodexBar > Settings > Plugins**, click **Refresh**, and approve the plugin.
+
+With **Merge Icons** enabled, the plugin appears as its own provider tab. With Merge Icons disabled, CodexBar displays
+it as an appended plugin card.
 
 ## What It Shows
 

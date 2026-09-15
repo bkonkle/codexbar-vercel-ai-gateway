@@ -7,6 +7,7 @@ defineProvider({
   id: "vercel-ai-gateway",
   name: "Vercel AI Gateway",
   icon: { monogram: "V", tint: "#FFFFFF" },
+  topLevel: true,
   endpoints: ["https://ai-gateway.vercel.sh"],
   auth: { type: "bearer", secret: "AI_GATEWAY_API_KEY" },
   settings: [
